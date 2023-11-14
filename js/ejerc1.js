@@ -27,5 +27,8 @@ const auto = {
     }
   },
 };
-//auto.encenderAuto();
-//auto.apagarAuto();
+document.write(auto);
+document.write(`<p>auto: ${auto.marca}</p>`);
+document.write(`<p>modelo: ${auto.modelo}</p>`);
+document.write(`<p>color: ${auto.color}</p>`);
+
