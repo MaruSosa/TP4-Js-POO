@@ -13,7 +13,24 @@ const cuenta ={
     saldo: 0,
 
     ingresar: function(cantidad){
-        const cantidad=parseFloat(prompt('Ingrese la cantidad: '));
-        cuenta.saldo+=cantidad;
+        if (cantidad > 0) {
+            this.saldo += cantidad;
+            document.write(`Se han ingresado ${cantidad} a la cuenta`);
+          } else {
+            document.write('La cantidad ingresada debe ser mayor que 0');
+          }
+    },
+    extraer: function(cantidad){
+        if(cantidad>0 && cuenta.saldo>=cantidad){
+            this.saldo -= cantidad;
+            document.write(`Se extrajo ${cantidad} de la cuenta`);
+        }else{
+            document.write('Error al realizar la extracción');
+        }
     }
-} 
+};
+document.write(`<p>cuenta: ${cuenta.titular}</p>`);
+cuenta.ingresar(2500);
+document.write(`<p>saldo: ${cuenta.saldo}</p>`);
+cuenta.extraer(1500);
+document.write(`<p>saldo: ${cuenta.saldo}</p>`);
