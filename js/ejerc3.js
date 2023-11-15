@@ -27,7 +27,7 @@ class Rectangulo{
     }
     calcularPerimetro(){
         if (this.alto > 0 && this.ancho > 0) {
-            return 2 * (parseFloat(this.alto) + parseFloat(this.ancho)); // Convertir a números y calcular
+            return 2 * (parseFloat(this.alto) + parseFloat(this.ancho)); 
           } else {
             return 'Valor ingresado inválido';
           }

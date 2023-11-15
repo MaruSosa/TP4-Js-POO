@@ -11,7 +11,6 @@ const auto = {
 
   encenderAuto: function () {
     if (!this.encendido) {
-      // Verifica si el auto está apagado
       this.encendido = true;
       document.write("Auto encendido");
     } else {
