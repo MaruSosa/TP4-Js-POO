@@ -40,14 +40,11 @@ class Agenda {
     this.capacidad = 10;
   }
 
-  agregarContacto() {
+  agregarContacto(contacto) {
     if (!this.agendaLlena()) {
-      let nombre = prompt("Ingrese el nombre del contacto:");
-      let telefono = prompt("Ingrese el teléfono del contacto:");
-      if (!this.existeContacto(nombre)) {
-        let nuevoContacto = new Contacto(nombre, telefono);
-        this.contactos.push(nuevoContacto);
-        alert(`Se ha agregado el contacto ${nombre} con teléfono ${telefono}.`);
+      if (!this.existeContacto(contacto.nombre)) {
+        this.contactos.push(contacto);
+        alert(`Se ha agregado el contacto ${contacto.nombre} con teléfono ${contacto.telefono}.`);
       } else {
         alert("Ya existe un contacto con ese nombre.");
       }
@@ -55,47 +52,36 @@ class Agenda {
       alert("La agenda ya se encuentra llena.");
     }
   }
-  existeContacto(nombre) {
-    return this.contactos.some((contacto) => contacto.nombre === nombre);
+  existeContacto(contacto) {
+    return this.contactos.find((c) => c.nombre === contacto.nombre) !== undefined;
   }
 
   listarContactos() {
     document.write("<h1>Agenda</h1>");
     document.write("<ul>");
-    this.contactos.forEach((contacto) => {
+    this.contactos.map((contacto) => {
       document.write(
         `<li>Nombre: ${contacto.nombre} Teléfono: ${contacto.telefono}</li>`
       );
     });
     document.write("</ul>");
   }
-
-  buscarContacto() {
-    let nombreBuscado = prompt("Ingrese el nombre del contacto a buscar:");
-    let contactoEncontrado = this.contactos.find(
-      (contacto) => contacto.nombre === nombreBuscado
-    );
+  buscarContacto(nombre) {
+    let contactoEncontrado = this.contactos.find((contacto) => contacto.nombre === nombre);
     if (contactoEncontrado) {
-      document.write(
-        `El teléfono de ${nombreBuscado} es: ${contactoEncontrado.telefono}`
-      );
+      document.write(`El teléfono de ${nombre} es: ${contactoEncontrado.telefono}`);
     } else {
-      document.write(
-        `El nombre que busca no se encuentra registrado en la agenda`
-      );
+      document.write(`El nombre que busca no se encuentra registrado en la agenda`);
     }
   }
 
-  eliminarContacto() {
-    let nombre = prompt("Ingrese el nombre del contacto a eliminar:");
-    let indice = this.contactos.findIndex(
-      (contacto) => contacto.nombre === nombre
-    );
+  eliminarContacto(contacto) {
+    let indice = this.contactos.findIndex((c) => c.nombre === contacto);
     if (indice !== -1) {
       this.contactos.splice(indice, 1);
-      document.write(`El contacto ${nombre} ha sido eliminado.`);
+      document.write(`El contacto ${contacto} ha sido eliminado.`);
     } else {
-      document.write(`El contacto ${nombre} no existe en la lista.`);
+      alert(`El contacto ${contacto} no existe en la lista.`);
     }
   }
 
@@ -129,22 +115,25 @@ function mostrarMenuOpciones() {
 
 let agenda = new Agenda();
 let continuar = true;
-
 while (continuar) {
   let opcionSeleccionada = mostrarMenuOpciones();
-
   switch (opcionSeleccionada) {
     case "1":
-      agenda.agregarContacto();
+      let nombre = prompt("Ingrese el nombre del contacto:");
+      let telefono = prompt("Ingrese el teléfono del contacto:");
+      const contacto = new Contacto(nombre,telefono);
+      agenda.agregarContacto(contacto);
       break;
     case "2":
-      agenda.buscarContacto();
+      let nombreBuscar = prompt("Ingrese el nombre del contacto a buscar:");
+      agenda.buscarContacto(nombreBuscar);
       break;
     case "3":
       agenda.listarContactos();
       break;
     case "4":
-      agenda.eliminarContacto();
+      let nombreEliminar = prompt("Ingrese el nombre del contacto a eliminar:");
+      agenda.eliminarContacto(nombreEliminar);
       break;
     case "5":
       agenda.huecosLibres();
@@ -153,7 +142,7 @@ while (continuar) {
       continuar = false;
       break;
     default:
-      console.log("Por favor, ingrese una opción válida.");
+      alert("Por favor, ingrese una opción válida.");
       break;
   }
 }
